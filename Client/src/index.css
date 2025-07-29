@@ -1,0 +1,104 @@
+/* src/index.css or src/App.css */
+
+/* Import Tailwind CSS v4 core */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Namdhinggo', sans-serif;
+  background: linear-gradient(to bottom right, #fff8dc, #f4e2d8, #e0c097);
+  background-attachment: fixed;
+  background-size: cover;
+} */
+
+
+
+.namdhinggo-regular {
+  font-family: "Namdhinggo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.namdhinggo-medium {
+  font-family: "Namdhinggo", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.namdhinggo-semibold {
+  font-family: "Namdhinggo", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.namdhinggo-bold {
+  font-family: "Namdhinggo", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.namdhinggo-extrabold {
+  font-family: "Namdhinggo", serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.radial-bg {
+  background: radial-gradient(circle at center, #57C785 0%, #2D6A4F 60%, #000000 100%);
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      transform: translateY(1rem); /* 1rem = 16px */
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out forwards;
+  }
+
+  @keyframes fade-in-down {
+    from {
+      transform: translateY(-0.625rem); /* -10px */
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color:rgb(19, 58, 35); /* Match your green background */
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 50px; /* Makes it circular vertically */
+  border: 2px solid rgb(16, 50, 30); /* Creates spacing from track */
+}
+
+/* Firefox support */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: black rgb(26, 48, 35);
+}
+
+}
+
