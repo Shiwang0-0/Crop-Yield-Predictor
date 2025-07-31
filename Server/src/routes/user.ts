@@ -1,5 +1,5 @@
 import express from 'express'
-import {register, login, getProfile, predict, getRandomData} from '../controller/user'
+import {register, login, getProfile, predict, publishPrediction, getRandomData} from '../controller/user'
 import { isAuthenticated } from '../middleware/auth';
 
 const router= express.Router();
@@ -11,6 +11,8 @@ router.use(isAuthenticated);
 
 router.get("/getProfile",getProfile);
 router.get("/randomData",getRandomData);
+
 router.post("/predict",predict);
+router.post("/publish",publishPrediction);
 
 export default router;

@@ -11,6 +11,17 @@ export interface formData {
     pesticide: inputPropsString,
 }
 
+export interface FormValues {
+  crop: string;
+  crop_year: string;
+  season: string;
+  state: string;
+  area: string;
+  rainfall: string;
+  fertilizer: string;
+  pesticide: string;
+}
+
 export interface PredictionResponse {
   yield: number;
 }

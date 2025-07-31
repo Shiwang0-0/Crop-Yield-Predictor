@@ -10,7 +10,7 @@ export interface inputPropsString {
 export interface SelectPropsOptions {
   label:string,
   name:string,
-  value:number|string,
+  value:string,
   placeholder:string,
   onChange:(e:React.ChangeEvent<HTMLSelectElement>)=>void;
   options:string[],

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from "express";
-import { User } from "../schema/user";
+import { User, UserCrop } from "../schema/user";
 import { customError } from "../utils/errors";
 import { compare } from "bcrypt"
 import { sendtoken } from "../utils/token";
@@ -85,6 +85,33 @@ const predict=(async(req:Request, res:Response, next:NextFunction)=>{
     }
 });
 
+const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=>{
+    try{
+        const user= req.user;
+        if (!user)
+            return next(new customError("User not found",401));
+        console.log("publish: ",req.body);
+        const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield } = req.body;
+        const newRecord = await UserCrop.create({
+            userId: user._id,
+            crop,
+            crop_year,
+            season,
+            state,
+            area,
+            rainfall,
+            fertilizer,
+            pesticide,
+            predictedYield,
+        });
+
+        res.status(201).json({ message: "Published successfully"});
+    }catch (err){
+        console.error("Error publishing prediction:", err);
+        next(err);
+    }
+});
+
 const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
         console.log("mydir: ",__dirname)
@@ -106,4 +133,4 @@ const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
 })
 
 
-export {register, login, getProfile, predict, getRandomData};
+export {register, login, getProfile, predict, publishPrediction, getRandomData};

@@ -9,4 +9,19 @@ interface IUserDocument extends IUser, Document {
     _id: Types.ObjectId;
 }
 
-export {IUser, IUserDocument}
+interface IUserCrop {
+    userId: Types.ObjectId;
+    crop: string;
+    crop_year: string;
+    season: string;
+    state: string;
+    area: string;
+    fertilizer: string;
+    pesticide: string;
+    rainfall: string;
+    predictedYield: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export {IUser, IUserDocument, IUserCrop};
