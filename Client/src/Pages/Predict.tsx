@@ -2,6 +2,7 @@ import { useState } from "react"
 import { InputString, SelectOption } from "../Components/Inputs";
 import { server } from "../constants/configServer";
 import type { formData, PredictionResponse, FormValues } from "../constants/interfaces/crop";
+import { cropOptions, stateOptions, seasonOptions } from "../constants/cropDetails";
 import axios from "axios";
 import { getRandomData } from "../utils/getRandomData";
 import { useEffect } from "react";
@@ -9,13 +10,7 @@ import toast from "react-hot-toast";
 
 const Predict = () => {
 
-    
-
     const numberRegex = /^\d*\.?\d*$/;
-
-    const cropOptions = ['Arecanut', 'Arhar/Tur', 'Bajra', 'Banana', 'Barley', 'Black pepper', 'Cardamom', 'Cashewnut', 'Castor seed', 'Coconut', 'Coriander', 'Cotton(lint)', 'Cowpea(Lobia)', 'Dry chillies', 'Garlic', 'Ginger', 'Gram', 'Groundnut', 'Guar seed', 'Horse-gram', 'Jowar', 'Jute', 'Khesari', 'Linseed', 'Maize', 'Masoor', 'Mesta', 'Moong(Green Gram)', 'Moth', 'Niger seed', 'Oilseeds total', 'Onion', 'Other  Rabi pulses', 'Other Cereals', 'Other Kharif pulses', 'Other Summer Pulses', 'Peas & beans (Pulses)', 'Potato', 'Ragi', 'Rapeseed &Mustard', 'Rice', 'Safflower', 'Sannhamp', 'Sesamum', 'Small millets', 'Soyabean', 'Sugarcane', 'Sunflower', 'Sweet potato', 'Tapioca', 'Tobacco', 'Turmeric', 'Urad', 'Wheat', 'other oilseeds'];
-    const seasonOptions = ['Autumn', 'Kharif', 'Rabi', 'Summer', 'Whole Year', 'Winter'];
-    const stateOptions = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
     
     const handleChange = (key: keyof formData, value: string) => {
             setForm((prev) => ({
@@ -154,6 +149,7 @@ const Predict = () => {
             if(!res)
                 throw new Error("Error Publishing the results");
             toast.success(res.data.message);
+            setShowModal(false);
         }catch{
             toast.error("Something went wrong while publishing the results.");
         }

@@ -93,7 +93,7 @@ const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=
         console.log("publish: ",req.body);
         const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield } = req.body;
         const newRecord = await UserCrop.create({
-            userId: user._id,
+            username: user.username,
             crop,
             crop_year,
             season,

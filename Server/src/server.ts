@@ -6,6 +6,7 @@ import userRoute from './routes/user'
 import connectDB from './utils/database';
 import errorMiddleware from './middleware/error';
 import cookieParser from "cookie-parser";
+import { getLeaderboardEntries } from './controller/leaderboard';
 
 const app=express();
 app.use(cors(corsOptions));
@@ -26,6 +27,7 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/user', userRoute);
+app.get("/leaderboard",getLeaderboardEntries);
 
 app.use(errorMiddleware)
 

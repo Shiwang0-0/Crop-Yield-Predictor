@@ -39,11 +39,9 @@ userSchema.pre('save',async function(next){
 
 export const User=mongoose.models.User || model("User",userSchema)
 
-
-
 const userCrop= new Schema<IUserCrop>({
-    userId:{
-        type:Schema.Types.ObjectId,
+    username:{
+        type:String,
         ref:"User",
         required:true
     },

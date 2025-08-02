@@ -4,7 +4,7 @@ interface User{
 }
 
 interface ProfileResponseInterface{
-    success:Boolean,
+    success:boolean,
     user:User
 }
 

@@ -10,7 +10,7 @@ interface IUserDocument extends IUser, Document {
 }
 
 interface IUserCrop {
-    userId: Types.ObjectId;
+    username: string;
     crop: string;
     crop_year: string;
     season: string;

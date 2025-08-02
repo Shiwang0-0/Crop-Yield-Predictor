@@ -4,6 +4,7 @@ import LandingPage from "./Pages/LandingPage"
 import Home from "./Pages/Home"
 import Predict from "./Pages/Predict"
 import Login from "./Pages/Login"
+import Leaderboard from "./Pages/Leaderboard";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PublicRoute from "./Components/PublicRoute";
 import Profile from "./Components/Profile";
@@ -19,6 +20,7 @@ const App = () => {
       <Route path="/home" element={<ProtectedRoute> <Home/> </ProtectedRoute>} />
       <Route path="/predict" element={<ProtectedRoute> <Predict/> </ProtectedRoute>} />
       <Route path="/myprofile" element={<ProtectedRoute> <Profile/> </ProtectedRoute>} />
+      <Route path="/leaderboard" element={<Leaderboard/>} />
       <Route path="/:mode" element={<PublicRoute> <Login/> </PublicRoute>} />
     </Routes>
     <Toaster position='top-right'/>
