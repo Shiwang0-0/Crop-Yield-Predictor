@@ -6,20 +6,21 @@ import { customError } from "../utils/errors"
 
 const isAuthenticated=async(req:authRequest, res:Response, next:NextFunction)=>{
     try{
+        
         const token = req.cookies["val-token"];
-        if (!token) 
+        if (!token) {
             return next(new customError("Login Required",401));
-
+        }
         const secret = process.env.JWT_SECRET;
         if (!secret) 
             return next(new customError("Something Went Wrong",500));
         const decodedToken= jwt.verify(token, secret) as {_id:string}
 
-        const user= await User.findById(decodedToken._id).select("_id username");
+        const user= await User.findById(decodedToken._id).select("_id username email");
         if(!user)
             return next(new customError("Invalid Credentials",401));
 
-        req.user= {_id: user._id.toString(), username:user.username};
+        req.user= {_id: user._id.toString(), email:user.email, username:user.username};
 
         next();
     }   

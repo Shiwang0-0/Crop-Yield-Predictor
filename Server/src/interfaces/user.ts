@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 
 interface IUser {
+  email: string,
   username: string;
   password: string;
 }
@@ -10,6 +11,7 @@ interface IUserDocument extends IUser, Document {
 }
 
 interface IUserCrop {
+    email: string,
     username: string;
     crop: string;
     crop_year: string;
@@ -20,8 +22,13 @@ interface IUserCrop {
     pesticide: string;
     rainfall: string;
     predictedYield: number;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date;
 }
 
-export {IUser, IUserDocument, IUserCrop};
+interface ISupportRequest extends IUserCrop {
+  supportType: "financial" | "technical" | "advisory" | "other";
+  supportDescription?: string
+}
+
+export {IUser, IUserDocument, IUserCrop, ISupportRequest};

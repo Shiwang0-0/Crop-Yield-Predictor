@@ -20,6 +20,7 @@ const Login = () => {
     const {mode}=useParams();
     
     const [formData,setFormData]=useState<credentials>({
+        email:"",
         username:"",
         password:"",
         confirmPassword:""
@@ -27,6 +28,7 @@ const Login = () => {
 
     useEffect(() => {
         setFormData({
+            email:"",
             username: "",
             password: "",
             confirmPassword: "",
@@ -63,6 +65,7 @@ const Login = () => {
             console.log(isLogin ? "Logging in..." : "Registering...");
             if(isLogin){
                 await axios.post<User>(`${server}/user/login`,{
+                        email:formData.email,
                         username:formData.username,
                         password:formData.password
                     },
@@ -75,6 +78,7 @@ const Login = () => {
                 )
             }else{
                 await axios.post<User>(`${server}/user/register`,{
+                        email:formData.email,
                         username:formData.username,
                         password:formData.password
                     },
@@ -119,6 +123,17 @@ const Login = () => {
             {isLogin ? "Login to your account" : "Create an account"}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+                <label className="block text-sm text-gray-700 font-semibold mb-1">Email</label>
+                <input
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Enter your email"
+                />
+            </div>
             <div>
                 <label className="block text-sm text-gray-700 font-semibold mb-1">Username</label>
                 <input

@@ -1,10 +1,15 @@
 import mongoose, { Schema, HydratedDocument, model, Types } from "mongoose";
 import {isError} from "../utils/errors";
 import bcrypt from 'bcrypt';
-import { IUser, IUserCrop } from "../interfaces/user";
+import { IUser, IUserCrop, ISupportRequest } from "../interfaces/user";
 
 
 const userSchema = new Schema<IUser>({
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     username: {
         type: String,
         required: true,
@@ -13,7 +18,7 @@ const userSchema = new Schema<IUser>({
     password: {
         type: String,
         required: true,
-        // select:false
+        select:false
     },
 },
     {
@@ -40,6 +45,11 @@ userSchema.pre('save',async function(next){
 export const User=mongoose.models.User || model("User",userSchema)
 
 const userCrop= new Schema<IUserCrop>({
+    email: {
+        type: String,
+        ref:"User",
+        required:true
+    },
     username:{
         type:String,
         ref:"User",
@@ -61,3 +71,37 @@ const userCrop= new Schema<IUserCrop>({
 );
 
 export const UserCrop = mongoose.models.userCrop || model("UserCrop",userCrop);
+
+const supportRequest= new Schema<ISupportRequest>({
+    email: {
+        type: String,
+        ref:"User",
+        required:true
+    },
+    username:{
+        type:String,
+        ref:"User",
+        required:true
+    },
+    crop: { type: String, required: true },
+    crop_year: { type: String, required: true },
+    season: { type: String, required: true },
+    state: { type: String, required: true },
+    area: { type: String, required: true },
+    fertilizer: { type: String, required: true },
+    pesticide: { type: String, required: true },
+    rainfall: { type: String, required: true },
+    predictedYield: { type: Number, required: true },
+    supportType: { 
+        type:String, 
+        enum: ["financial", "technical", "advisory", "other"],
+        required:true
+    },
+    supportDescription: { type: String }
+    },
+    {
+        timestamps:true
+    }
+)
+
+export const SupportReq = mongoose.models.supportRequest || model("SupportReq",supportRequest);

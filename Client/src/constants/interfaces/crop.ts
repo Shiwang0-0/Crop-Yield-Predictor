@@ -23,5 +23,7 @@ export interface FormValues {
 }
 
 export interface PredictionResponse {
-  yield: number;
+  outputYield: number;
+  userAvg:number|null; 
+  globalAvg:number|null;
 }

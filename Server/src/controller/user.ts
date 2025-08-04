@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from "express";
-import { User, UserCrop } from "../schema/user";
+import { SupportReq, User, UserCrop } from "../schema/user";
 import { customError } from "../utils/errors";
 import { compare } from "bcrypt"
 import { sendtoken } from "../utils/token";
@@ -10,9 +10,9 @@ import { authRequest } from "../interfaces/authRequest";
 const register = (async(req: Request, res: Response, next: NextFunction)=>{
 
     try {
-        const {username, password} = req.body;
+        const {email, username, password} = req.body;
 
-        const user = await User.create({ username, password });
+        const user = await User.create({ email, username, password });
 
         if (!user)
             return next(new customError("Error Creating User", 500));
@@ -62,8 +62,11 @@ const getProfile=(async(req:authRequest, res:Response, next:NextFunction)=>{
     }
 })
 
-const predict=(async(req:Request, res:Response, next:NextFunction)=>{
+const predict=(async(req:authRequest, res:Response, next:NextFunction)=>{
     try{
+        const username = req.user?.username;
+        const { crop, season, state}=req.body;
+
         const modelResponse= await fetch("http://localhost:5000/predict",{
              method: "POST",
             headers: {
@@ -76,8 +79,39 @@ const predict=(async(req:Request, res:Response, next:NextFunction)=>{
             console.error("Model server error:", text);
             return next(text);
         }
-        const data = await modelResponse.json();
-        res.json(data); 
+        const predictionData = await modelResponse.json();
+        const outputYield = predictionData.yield;
+
+        const userAvgCal = await UserCrop.aggregate([
+            {
+                $match:{username, crop, season, state}
+            },
+            {
+                $group:{
+                    _id:null,
+                    userAvg:{$avg:"$predictedYield"}
+                }
+            }
+        ]);
+
+        const userAvg=userAvgCal[0]?.userAvg || null;
+
+        const globalAvgCal = await UserCrop.aggregate([
+            {
+                $match:{crop, season, state}
+            },
+            {
+                $group:{
+                    _id:null,
+                    globalAvg:{$avg:"$predictedYield"}
+                }
+            }
+        ]);
+
+        const globalAvg=globalAvgCal[0]?.globalAvg || null;
+        console.log(userAvgCal,globalAvgCal);
+            
+        res.json({outputYield, userAvg, globalAvg}); 
     }
     catch(err){
         console.log("error in response by the model")
@@ -94,6 +128,7 @@ const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=
         const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield } = req.body;
         const newRecord = await UserCrop.create({
             username: user.username,
+            email: user.email,
             crop,
             crop_year,
             season,
@@ -111,6 +146,38 @@ const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=
         next(err);
     }
 });
+
+const publishSupportRequest=async (req:authRequest, res:Response, next:NextFunction)=>{
+        try{
+            const user= req.user;
+            if (!user)
+                return next(new customError("User not found",401));
+            console.log("publish: ",req.body);
+
+            const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield, supportType, supportDescription } = req.body;
+            const newRequest= await SupportReq.create({
+                username: user.username,
+                email:user.email,
+                crop,
+                crop_year,
+                season,
+                state,
+                area,
+                rainfall,
+                fertilizer,
+                pesticide,
+                predictedYield,
+                supportType,
+                supportDescription
+            })
+            res.status(201).json({ message: "Support Request Sent successfully"});
+        }
+        catch(err){
+            console.error("Error publishing Support Request:", err);
+            next(err);
+        }
+}
+
 
 const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
@@ -133,4 +200,4 @@ const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
 })
 
 
-export {register, login, getProfile, predict, publishPrediction, getRandomData};
+export {register, login, getProfile, predict, publishPrediction, publishSupportRequest, getRandomData};

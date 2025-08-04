@@ -3,3 +3,8 @@ export interface FilterType {
     state?:string,
     season?:string
 }
+
+export interface Comparision{
+    userAvg?:number,
+    globalAvg?:number
+}

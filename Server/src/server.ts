@@ -7,6 +7,7 @@ import connectDB from './utils/database';
 import errorMiddleware from './middleware/error';
 import cookieParser from "cookie-parser";
 import { getLeaderboardEntries } from './controller/leaderboard';
+import { support } from './controller/support';
 
 const app=express();
 app.use(cors(corsOptions));
@@ -26,8 +27,9 @@ app.get('/',(req,res)=>{
     res.send("connected to ts backend");
 });
 
-app.use('/user', userRoute);
 app.get("/leaderboard",getLeaderboardEntries);
+app.get("/support", support);
+app.use('/user', userRoute);
 
 app.use(errorMiddleware)
 

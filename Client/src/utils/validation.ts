@@ -1,6 +1,8 @@
 import type { credentialErrors, credentials } from "../constants/interfaces/credentials";
 
 export const validate = (values:credentials, isLogin:boolean) => {
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const errors:credentialErrors={};
   if (!values.username) {
@@ -17,6 +19,11 @@ export const validate = (values:credentials, isLogin:boolean) => {
   }
   if(!isLogin)
   {
+      if (!values.email) {
+        errors.email = "Email is required";
+      } else if (!emailRegex.test(values.email)) {
+        errors.email = "Enter a valid email address";
+      }
       if (!values.username) {
         errors.username= "Name is required";
       } else if (values.username.length < 2) {

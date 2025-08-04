@@ -18,9 +18,9 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center space-x-6">
             <Link to="/home" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">Home  </Link>
-            <Link to="/about" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">About</Link>
             <Link to="/leaderboard" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">  Leaderboard</Link>
             <Link to="/predict" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">  Predict</Link>
+            <Link to="/support" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">Support</Link>
             <button
               onClick={navigateToLogin}
               className="text-white border border-white/50 bg-white/10 hover:bg-white/20 transform hover:scale-110 transition-transform duration-500 font-medium rounded-lg text-sm px-4 py-[6px] backdrop-blur-sm transition-all"
@@ -45,11 +45,10 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden flex flex-col mt-2 space-y-2 pb-4">
             <Link to="/home" onClick={() => setIsOpen(false)}className="text-white hover:text-gray-200 transition">Home</Link>
-            <Link to="/about" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200 transition">About</Link>
+            <Link to="/support" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200 transition">Support</Link>
             <Link to="/leaderboard" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200 transition">Leaderboard</Link>
             <Link to="/predict" onClick={() => setIsOpen(false)}className="text-white hover:text-gray-200 transition">Predict</Link>
 
