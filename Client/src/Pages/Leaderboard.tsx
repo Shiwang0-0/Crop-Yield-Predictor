@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { cropOptions, stateOptions, seasonOptions } from "../constants/cropDetails";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { server } from "../constants/configServer";
-import type { LeaderboardEntry, LeaderboardResponse } from "../constants/types/leaderboard";
+import type { LeaderboardEntry, LeaderboardResponse } from "../constants/interfaces/leaderboard";
 
 const Leaderboard = () => {
+
+  const navigate = useNavigate();
   
   const [selectedCrop, setSelectedCrop] = useState<string>("");
   const [selectedState, setSelectedState] = useState<string>("");
@@ -50,6 +52,9 @@ const Leaderboard = () => {
 
   return (
     <div className="min-h-screen w-full font-sans flex flex-col">
+      <div className="absolute top-12 left-12 z-50 bg-white rounded-full p-2 shadow hover:shadow-md transition cursor-pointer" onClick={()=>navigate("/home")}>
+        <img src="/home.png" alt="Home" className="w-8 h-8 object-contain" />
+      </div>
       <div className="h-[20vh] bg-[#1E4023] text-white text-center items-center px-10 py-6 shadow-lg">
           <h2 className="text-4xl font-bold mb-2 mt-8">Leaderboard</h2>
           <p className="text-md text-gray-200">

@@ -1,4 +1,4 @@
-export interface inputPropsString {
+export type inputPropsString = {
   label: string,
   name: string,
   placeholder?: string,
@@ -7,7 +7,7 @@ export interface inputPropsString {
   required?: boolean
 }
 
-export interface SelectPropsOptions {
+export type SelectPropsOptions = {
   label:string,
   name:string,
   value:string,

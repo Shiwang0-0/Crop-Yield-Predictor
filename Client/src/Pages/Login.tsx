@@ -111,6 +111,9 @@ const Login = () => {
 
     return (
     <div className="min-h-screen flex font-sans bg-[#eaf4ec]">
+        <div className="absolute top-12 left-12 z-50 bg-white rounded-full p-2 shadow hover:shadow-md transition cursor-pointer" onClick={()=>navigate("/")}>
+        <img src="/home.png" alt="Home" className="w-8 h-8 object-contain" />
+      </div>
         <div className="w-[30%] bg-[#1E4023] text-white flex flex-col justify-center items-center p-8 hidden md:flex">
         <h2 className="text-4xl font-bold mb-4">CropYieldX</h2>
         <p className="text-lg text-center leading-relaxed">Predict crop yields. Track insights. Empower farmers.</p>

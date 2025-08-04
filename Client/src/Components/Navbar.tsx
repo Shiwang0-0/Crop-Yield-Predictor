@@ -1,14 +1,41 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { UseAuth } from "../context/auth";
+import toast from "react-hot-toast";
+import { extractError } from "../utils/extractError";
+import axios from "axios";
+import { server } from "../constants/configServer";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
+  const {user, setUser}= UseAuth();
+
   const navigateToLogin = () => {
     navigate("/login");
   };
+
+  const handleLogout = async () => {
+    try{
+      const res = await axios.get<{message:string}>(`${server}/user/logout`,{
+        withCredentials:true
+      })
+      setUser(null);
+      toast.success(res.data.message)
+    }catch(err){
+      toast.error(extractError(err));
+    }
+  }
+
+
+  const handleButton=()=>{
+      if(user)
+        handleLogout();
+      else
+        navigateToLogin();
+  }
 
   return (
     <nav className="w-[60%] fixed top-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md shadow-md rounded-xl z-50">
@@ -22,10 +49,10 @@ const Navbar = () => {
             <Link to="/predict" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">  Predict</Link>
             <Link to="/support" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">Support</Link>
             <button
-              onClick={navigateToLogin}
+              onClick={handleButton}
               className="text-white border border-white/50 bg-white/10 hover:bg-white/20 transform hover:scale-110 transition-transform duration-500 font-medium rounded-lg text-sm px-4 py-[6px] backdrop-blur-sm transition-all"
             >
-              Get Started
+              {user? `Logout`:`Get Started`}
             </button>
           </div>
 

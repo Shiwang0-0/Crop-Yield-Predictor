@@ -1,4 +1,4 @@
-import type { inputPropsString, SelectPropsOptions } from "../types/forminput"
+import type { inputPropsString, SelectPropsOptions } from "./forminput"
 
 export interface formData {
     crop: SelectPropsOptions,

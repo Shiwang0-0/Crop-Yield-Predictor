@@ -30,4 +30,16 @@ interface ISupportRequest extends IUserCrop {
   supportDescription?: string
 }
 
-export type {User, ProfileResponseInterface, IUserCrop, ISupportRequest};
+interface IRecentPrediction {
+    _id: string,
+    crop: string,
+    predictedYield: number,
+    createdAt: Date
+}
+
+interface HomeStats {
+    bestPrediction: IUserCrop;
+    recentPrediction: IRecentPrediction[];
+}
+
+export type {User, ProfileResponseInterface, IUserCrop, ISupportRequest, IRecentPrediction, HomeStats};

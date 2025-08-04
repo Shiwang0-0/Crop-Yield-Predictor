@@ -1,4 +1,4 @@
-export interface LeaderboardEntry {
+export type LeaderboardEntry = {
   username: string;
   crop: string;
   crop_year: string;
@@ -13,7 +13,7 @@ export interface LeaderboardEntry {
   updatedAt: string;
 }
 
-export interface LeaderboardResponse {
+export type LeaderboardResponse = {
   entries: LeaderboardEntry[];
   totalPages: number;
 }

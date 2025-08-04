@@ -6,9 +6,12 @@ import { cropOptions, stateOptions, seasonOptions } from "../constants/cropDetai
 import axios from "axios";
 import { getRandomData } from "../utils/getRandomData";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const Predict = () => {
 
     const numberRegex = /^\d*\.?\d*$/;
+
+    const navigate = useNavigate();
     
     const handleChange = (key: keyof formData, value: string) => {
             setForm((prev) => ({
@@ -181,6 +184,9 @@ const Predict = () => {
 return (
   <>
     <div className="min-h-screen w-full flex font-sans">
+        <div className="absolute top-12 left-12 z-50 bg-white rounded-full p-2 shadow hover:shadow-md transition cursor-pointer" onClick={()=>navigate("/home")}>
+        <img src="/home.png" alt="Home" className="w-8 h-8 object-contain" />
+      </div>
       <div className="w-[30%] bg-[#1E4023] text-white flex flex-col justify-center items-center px-6 py-10">
         <h2 className="text-4xl font-bold mb-6 text-center leading-tight">AI Crop Yield</h2>
         <p className="text-md text-gray-200 text-center">Predict agricultural yield with precision and ease. Powered by explainable AI, tailored for farmers and analysts.</p>

@@ -1,4 +1,4 @@
-import type { inputPropsString, SelectPropsOptions } from "../constants/types/forminput"
+import type { inputPropsString, SelectPropsOptions } from "../constants/interfaces/forminput"
 
 
 

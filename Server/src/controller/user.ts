@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { SupportReq, User, UserCrop } from "../schema/user";
 import { customError } from "../utils/errors";
 import { compare } from "bcrypt"
-import { sendtoken } from "../utils/token";
+import { cookieOption, sendtoken } from "../utils/token";
 import { authRequest } from "../interfaces/authRequest";
 
 const register = (async(req: Request, res: Response, next: NextFunction)=>{
@@ -178,6 +178,32 @@ const publishSupportRequest=async (req:authRequest, res:Response, next:NextFunct
         }
 }
 
+const homeStats=(async(req:authRequest, res:Response, next:NextFunction)=>{
+    try{
+        const user= req.user;
+        if (!user)
+            return next(new customError("User not found",401));
+            
+        const username = user.username;
+
+        const recentPrediction = await UserCrop.find({username}).sort({createdAt:-1}).limit(5).select("crop predictedYield createdAt").lean();
+
+        const bestPrediction = await UserCrop.findOne({username}).sort({predictedYield:-1}).lean();
+        res.send({recentPrediction, bestPrediction});
+
+    }catch(err){
+        console.error("soemthing Went Wrong:", err);
+        next(err);
+    }
+})
+
+const logout=(async(req:Request, res:Response, next:NextFunction)=>{
+    try{
+        res.cookie("val-token","",{...cookieOption,maxAge:0}).json({ message:"Logout Successful" })
+    }catch(err){
+        next(err);
+    }
+})
 
 const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
@@ -200,4 +226,4 @@ const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
 })
 
 
-export {register, login, getProfile, predict, publishPrediction, publishSupportRequest, getRandomData};
+export {register, login, getProfile, homeStats, predict, publishPrediction, publishSupportRequest, logout, getRandomData};

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { cropOptions, seasonOptions, stateOptions } from "../constants/cropDetails";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { server } from "../constants/configServer";
 import type { ISupportRequest } from "../constants/interfaces/user";
 
 const SupportBoard = () => {
+
+  const navigate = useNavigate();
+
   const [entries, setEntries] = useState<ISupportRequest[]>([]);
   const [selectedCrop, setSelectedCrop] = useState("");
   const [selectedState, setSelectedState] = useState("");
@@ -51,6 +54,9 @@ const SupportBoard = () => {
 
   return (
     <div className="min-h-screen w-full font-sans flex flex-col">
+      <div className="absolute top-12 left-12 z-50 bg-white rounded-full p-2 shadow hover:shadow-md transition cursor-pointer" onClick={()=>navigate("/home")}>
+        <img src="/homeyellow.png" alt="Home" className="w-8 h-8 object-contain bg:yellow-500" />
+      </div>
       <div className="h-[20vh] bg-yellow-600 text-white text-center items-center px-10 py-6 shadow-lg">
         <h2 className="text-4xl font-bold mb-2 mt-8">Support Board</h2>
         <p className="text-md text-yellow-100">
@@ -121,7 +127,7 @@ const SupportBoard = () => {
                     <td className="px-4 py-4">{entry.crop}</td>
                     <td className="px-4 py-4">{entry.season}</td>
                     <td className="px-4 py-4">{entry.state}</td>
-                    <td className="px-4 py-4 text-yellow-700 font-semibold">{entry.predictedYield.toFixed(2)}</td>
+                    <td className="px-4 py-4 text-yellow-600 font-semibold">{entry.predictedYield.toFixed(2)}</td>
                     <td className="px-4 py-4 capitalize">{entry.supportType}</td>
                     <td className="px-4 py-4 text-sm whitespace-pre-wrap break-words max-w-[400px]">
                       {entry.supportDescription}
@@ -156,7 +162,7 @@ const SupportBoard = () => {
                 }}
                 disabled={page === 1}
                 className={`w-[100px] px-5 py-2 rounded-full font-medium transition-all duration-300
-                  ${page === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-yellow-600 text-white hover:bg-yellow-800"}`}>
+                  ${page === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-yellow-600 text-white hover:bg-yellow-700"}`}>
                 ← Prev
               </button>
 
@@ -171,7 +177,7 @@ const SupportBoard = () => {
                 }}
                 disabled={page >= totalPages}
                 className={`w-[100px] px-5 py-2 rounded-full font-medium transition-all duration-300
-                  ${page >= totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-yellow-600 text-white hover:bg-yellow-800"}`}>
+                  ${page >= totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-yellow-600 text-white hover:bg-yellow-700"}`}>
                 Next →
               </button>
             </div>

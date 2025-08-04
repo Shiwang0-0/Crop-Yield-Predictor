@@ -8,7 +8,6 @@ import Leaderboard from "./Pages/Leaderboard";
 import SupportBoard from "./Pages/SupportBoard";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PublicRoute from "./Components/PublicRoute";
-import Profile from "./Components/Profile";
 import { AuthProvider } from "./context/auth";
 
 const App = () => {
@@ -21,7 +20,6 @@ const App = () => {
       <Route path="/home" element={<ProtectedRoute> <Home/> </ProtectedRoute>} />
       <Route path="/predict" element={<ProtectedRoute> <Predict/> </ProtectedRoute>} />
       <Route path="/support" element={<ProtectedRoute> <SupportBoard/> </ProtectedRoute>} />
-      <Route path="/myprofile" element={<ProtectedRoute> <Profile/> </ProtectedRoute>} />
       <Route path="/leaderboard" element={<Leaderboard/>} />
       <Route path="/:mode" element={<PublicRoute> <Login/> </PublicRoute>} />
     </Routes>
