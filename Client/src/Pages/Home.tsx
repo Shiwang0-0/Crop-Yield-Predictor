@@ -1,12 +1,14 @@
+import { lazy, Suspense } from "react";
 import Navbar from "../Components/Navbar";
 import { UseAuth } from "../context/auth";
 import { useHomeStats } from "../Hooks/useHomeStats";
 import { useLeaderboard } from "../Hooks/useLeaderboard";
-import RecentPredictionsChart from "../Components/RecentPredictionChart.tsx";
 import HomeLeaderBoard from "../Components/HomeLeaderBoard";
 import SupportRequests from "../Components/SupportRequest";
 import BestPredictionSection from "../Components/BestPredictionSection";
 import Loader from "../Components/Loader";
+
+const RecentPredictionsChart = lazy(() => import("../Components/RecentPredictionChart.tsx"));
 
 const Home = () => {
   const { user } = UseAuth();
@@ -34,7 +36,9 @@ const Home = () => {
       <div className="flex flex-col lg:flex-row gap-6 h-[45rem]">
         <div className="flex-1 space-y-6 mb-10">
           <BestPredictionSection bestPrediction={bestPrediction} />
+          <Suspense fallback={<Loader/>}>
           <RecentPredictionsChart predictions={recentPredictions} />
+          </Suspense>
         </div>
         <div className="w-full lg:w-1/3 mb-10">
           <HomeLeaderBoard leaderboard={leaderboard} />
