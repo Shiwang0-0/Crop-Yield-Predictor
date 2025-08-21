@@ -7,6 +7,7 @@ import axios from "axios";
 import { getRandomData } from "../utils/getRandomData";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { extractError } from "../utils/extractError";
 const Predict = () => {
 
     const numberRegex = /^\d*\.?\d*$/;
@@ -56,16 +57,16 @@ const Predict = () => {
         state: { label: "State", name: "state", value: "", placeholder: "Select a state", required: true, options: stateOptions, 
             onChange: (e) => handleChange("state", e.target.value),
         },
-        area: { label: "Area", name: "area", value: "", placeholder: "Enter area", required: true, 
+        area: { label: "Area in hectares", name: "area", value: "", placeholder: "Enter area", required: true, 
             onChange: (e) => handleNumeric("area", e.target.value),
         },
-        rainfall: { label: "Rainfall", name: "rainfall", value: "", placeholder: "Enter rainfall", required: true, 
+        rainfall: { label: "Rainfall in mm", name: "rainfall", value: "", placeholder: "Enter rainfall", required: true, 
             onChange: (e) => handleNumeric("rainfall", e.target.value),
         },
-        fertilizer: { label: "Fertilizer", name: "fertilizer", value: "", placeholder: "Enter fertilizer", required: true, 
+        fertilizer: { label: "Fertilizer in kg", name: "fertilizer", value: "", placeholder: "Enter fertilizer", required: true, 
             onChange: (e) => handleNumeric("fertilizer", e.target.value),
         },
-        pesticide: { label: "Pesticide", name: "pesticide", value: "", placeholder: "Enter pesticide", required: true, 
+        pesticide: { label: "Pesticide in kg", name: "pesticide", value: "", placeholder: "Enter pesticide", required: true, 
             onChange: (e) => handleNumeric("pesticide", e.target.value),
         },
     });
@@ -97,6 +98,13 @@ const Predict = () => {
             fertilizer: form.fertilizer.value,
             pesticide: form.pesticide.value,
         };
+         for (const [key, value] of Object.entries(formValues)) {
+            if (!value) {
+            toast.error(`${key} cannot be empty`);
+            return;
+            }
+        }
+
         setFormValues(formValues)
         try {
             const res = await axios.post<PredictionResponse>(
@@ -109,7 +117,6 @@ const Predict = () => {
                     }
                 }
             );
-            console.log("new res:" ,res);
             if (!res)
                 throw new Error("Server error response not ok");
             setPredictedYield(res.data.outputYield);
@@ -140,6 +147,12 @@ const Predict = () => {
     }
 
     const confirmPublish=async()=>{
+        for (const [key, value] of Object.entries({ ...formValues, predictedYield })) {
+            if (!value) {
+                toast.error(`${key} cannot be empty`);
+                return;
+            }
+        }
         try{
             const res= await axios.post<{message:string}>(
                `${server}/user/publish`,
@@ -162,8 +175,19 @@ const Predict = () => {
     }
 
     const handleSupportSubmit = async () => {
+        for (const [key, value] of Object.entries({
+            ...formValues,
+            predictedYield,
+            supportType,
+            supportDescription,
+        })) {
+            if (!value) {
+                toast.error(`${key} cannot be empty`);
+                return;
+            }
+        }
         try {
-            await axios.post(`${server}/user/support-request`, {
+            await axios.post(`${server}/user/publish-support-request`, {
             ...formValues,
             predictedYield,
             supportType,
@@ -176,8 +200,8 @@ const Predict = () => {
             });
             toast.success("Support request submitted.");
             setShowPublishSupportModal(false);
-        }catch{
-            toast.error("Error submitting support request.");
+        }catch(err){
+            toast.error(extractError(err));
         }
     };
 

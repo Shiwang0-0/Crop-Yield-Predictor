@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { SupportReq } from "../schema/user";
+import { authRequest } from "../interfaces/authRequest";
+import { customError } from "../utils/errors";
 
-const support = async (req: Request, res: Response, next: NextFunction) => {
+const allSupportReq = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { page = 1, limit = 10, crop, state, season } = req.query;
 
@@ -29,4 +31,23 @@ const support = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { support };
+const userSupportReq = async(req: authRequest, res: Response, next:NextFunction)=>{
+  try{
+      const user= req.user;
+      if(!user)
+        return next(new customError("User not found",401));
+            
+      const username = user.username;
+      
+      const supportReq= await SupportReq.find({username}).sort({createdAt:-1});
+      console.log("user support req: ",supportReq);
+      res.status(200).json(supportReq);
+
+  }
+  catch (err) {
+    console.error("Error Fetching Support Requests:", err);
+    next(err);
+  }
+}
+
+export { allSupportReq , userSupportReq };

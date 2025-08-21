@@ -38,10 +38,11 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="w-[60%] fixed top-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md shadow-md rounded-xl z-50">
+    <div className="relative w-full">
+    <nav className="absolute w-[60%] top-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md shadow-md rounded-xl z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-14 items-center">
-          <img src="/logo.png" alt="logo" className="h-12 w-12 sm:w-16 object-contain aspect-square hover:scale-110 transition-transform duration-500" />
+          <img src="/logo.png" alt="logo" className="h-12 w-12 sm:w-16 object-contain aspect-square hover:scale-110 hover:cursor-pointer transition-transform duration-500" onClick={()=>{navigate("/")}}/>
 
           <div className="hidden md:flex items-center space-x-6">
             <Link to="/home" className="text-white hover:text-gray-200 transform hover:scale-110 transition-transform duration-500">Home  </Link>
@@ -84,6 +85,7 @@ const Navbar = () => {
         )}
       </div>
     </nav>
+    </div>
   );
 };
 

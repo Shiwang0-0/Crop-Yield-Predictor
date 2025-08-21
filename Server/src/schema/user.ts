@@ -2,6 +2,7 @@ import mongoose, { Schema, HydratedDocument, model, Types } from "mongoose";
 import {isError} from "../utils/errors";
 import bcrypt from 'bcrypt';
 import { IUser, IUserCrop, ISupportRequest } from "../interfaces/user";
+import { customError } from "../utils/errors";
 
 
 const userSchema = new Schema<IUser>({
@@ -103,5 +104,22 @@ const supportRequest= new Schema<ISupportRequest>({
         timestamps:true
     }
 )
+
+supportRequest.pre("save", async function (next) {
+  const SupportReq = mongoose.model<ISupportRequest>("SupportReq", supportRequest);
+
+    try{
+        const count = await SupportReq.countDocuments({ email: this.email });
+        if (count >= 3) {
+            return next(new customError("You can only create up to 3 support requests.", 400));
+        }
+        next();
+    }
+    catch(err:unknown){
+        const error=isError(err);
+        next(new Error(error.message));
+    }
+
+});
 
 export const SupportReq = mongoose.models.supportRequest || model("SupportReq",supportRequest);

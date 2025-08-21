@@ -1,6 +1,7 @@
 import express from 'express'
 import {register, login, getProfile, predict, publishPrediction, getRandomData, publishSupportRequest, homeStats, logout} from '../controller/user'
 import { isAuthenticated } from '../middleware/auth';
+import { userSupportReq } from '../controller/support';
 
 const router= express.Router();
 
@@ -16,6 +17,7 @@ router.get("/logout", logout);
 
 router.post("/predict",predict);
 router.post("/publish",publishPrediction);
-router.post("/support-request",publishSupportRequest);
+router.post("/publish-support-request",publishSupportRequest);
+router.get("/user-support-request",userSupportReq);
 
 export default router;

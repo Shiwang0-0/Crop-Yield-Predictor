@@ -68,13 +68,13 @@ const Leaderboard = () => {
           <table className="min-w-full table-fixed text-sm text-gray-900 border border-gray-200 rounded-lg shadow-md">
             <thead className="bg-[#1E4023] text-white">
               <tr>
-                <th className="px-6 py-3 w-30 text-left">Rank</th>
-                <th className="px-6 py-3 w-30 text-left">User</th>
-                <th className="px-6 py-3 w-30 text-left align-top">
-                  <div className="flex flex-col">
+                <th className="py-3 w-28 text-center">Rank</th>
+                <th className="py-3 w-28 text-center">User</th>
+                <th className="py-3 w-32 truncate text-center align-top">
+                  <div className="flex flex-col items-center">
                     <span className="text-white font-medium">Crop</span>
                     <select value={selectedCrop} onChange={(e) => setSelectedCrop(e.target.value)}
-                      className="w-30 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+                      className="w-44 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
                       <option value="">All</option>
                       {cropOptions.map((crop, idx) => (
                         <option key={idx} value={crop}>{crop}</option>))}
@@ -82,11 +82,11 @@ const Leaderboard = () => {
                   </div>
                 </th>
 
-                <th className="px-6 py-3 w-30 text-left align-top">
-                  <div className="flex flex-col">
+                <th className="px-6 py-3 w-32 truncate text-center align-top">
+                  <div className="flex flex-col items-center">
                     <span className="text-white font-medium">State</span>
                     <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)}
-                      className="w-30 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+                      className="w-44 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
                       <option value="">All</option>
                       {stateOptions.map((state, idx) => (
                         <option key={idx} value={state}>{state}</option>))}
@@ -94,11 +94,11 @@ const Leaderboard = () => {
                   </div>
                 </th>
 
-                <th className="px-6 py-3 w-30 text-left align-top">
-                  <div className="flex flex-col">
+                <th className="px-6 py-3 w-28 text-center align-top">
+                  <div className="flex flex-col items-center">
                     <span className="text-white font-medium">Season</span>
                     <select value={selectedSeason} onChange={(e) => setSelectedSeason(e.target.value)}
-                      className="w-30 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+                      className="w-44 mt-1 bg-white text-black border border-gray-300 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-600">
                       <option value="">All</option>
                       {seasonOptions.map((season, idx) => (
                         <option key={idx} value={season}>{season}</option>))}
@@ -106,7 +106,7 @@ const Leaderboard = () => {
                   </div>
                 </th>
 
-                <th className="px-6 py-3 w-30 text-left">Predicted Yield (%)</th>
+                <th className="px-6 py-3 w-28 text-center">Predicted Yield (%)</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -115,12 +115,12 @@ const Leaderboard = () => {
                   const rank = (page - 1) * 10 + index + 1;
                   return (
                     <tr key={index} className="hover:bg-green-100 transition">
-                      <td className="px-6 py-4 w-30 font-semibold text-green-800">{rank}</td>
-                      <td className="px-6 py-4 w-30 truncate overflow-hidden max-w-40">{entry.username}</td>
-                      <td className="px-6 py-4 w-30 truncate overflow-hidden max-w-40">{entry.crop}</td>
-                      <td className="px-6 py-4 w-30 truncate overflow-hidden max-w-40">{entry.state}</td>
-                      <td className="px-6 py-4 w-30 truncate overflow-hidden max-w-40">{entry.season}</td>
-                      <td className="px-6 py-4 w-30 truncate overflow-hidden max-w-40 font-medium text-green-700">
+                      <td className="py-4 w-28 text-center font-semibold text-green-800">{rank}</td>
+                      <td className="py-4 w-28 text-center truncate overflow-hidden max-w-40">{entry.username}</td>
+                      <td className="py-4 w-28 text-center truncate overflow-hidden max-w-40">{entry.crop}</td>
+                      <td className="py-4 w-28 text-center truncate overflow-hidden max-w-40">{entry.state}</td>
+                      <td className="py-4 w-28 text-center truncate overflow-hidden max-w-40">{entry.season}</td>
+                      <td className="py-4 w-28 text-center truncate overflow-hidden max-w-40 font-medium text-green-700">
                         {entry.predictedYield.toFixed(2)}
                       </td>
                     </tr>
@@ -128,7 +128,7 @@ const Leaderboard = () => {
                 })
               ) : (
                 <tr>
-                  <td colSpan={6} className="w-30 text-center px-6 py-6 text-gray-500 font-medium">
+                  <td colSpan={6} className="w-60 text-center px-6 py-6 text-gray-500 font-medium">
                     No records found.
                   </td>
                 </tr>
@@ -143,12 +143,12 @@ const Leaderboard = () => {
                 setSearchParams({ ...current, page: (page - 1).toString() });
               }}
               disabled={page === 1}
-              className={`w-[100px] px-5 py-2 rounded-full font-medium transition-all duration-300
+              className={`w-32 px-5 py-2 rounded-full font-medium transition-all duration-300
                           ${page === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed":"bg-[#1E4023] text-white hover:bg-green-700"}`}>
               ← Prev
             </button>
 
-              <span className="self-center text-gray-600 font-medium min-w-[120px] text-center inline-block">
+              <span className="self-center text-gray-600 font-medium min-w-32 text-center inline-block">
                 Page {page} of {totalPages}
               </span>
 
@@ -159,7 +159,7 @@ const Leaderboard = () => {
                 setSearchParams({ ...current, page: (page + 1).toString() });
               }}
               disabled={page >= totalPages}
-              className={`w-[100px] px-5 py-2 rounded-full font-medium transition-all duration-300
+              className={`w-32 px-5 py-2 rounded-full font-medium transition-all duration-300
                           ${page >= totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed":"bg-[#1E4023] text-white hover:bg-green-700"}`}>
               Next →
             </button>

@@ -7,7 +7,7 @@ import connectDB from './utils/database';
 import errorMiddleware from './middleware/error';
 import cookieParser from "cookie-parser";
 import { getLeaderboardEntries } from './controller/leaderboard';
-import { support } from './controller/support';
+import { allSupportReq } from './controller/support';
 
 const app=express();
 app.use(cors(corsOptions));
@@ -28,7 +28,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get("/leaderboard",getLeaderboardEntries);
-app.get("/support", support);
+app.get("/support", allSupportReq);
 app.use('/user', userRoute);
 
 app.use(errorMiddleware)

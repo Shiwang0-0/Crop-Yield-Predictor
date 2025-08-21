@@ -1,6 +1,6 @@
-    import { type ReactNode, useEffect, useState } from 'react'
+    import { type ReactNode, useEffect } from 'react'
     import { UseAuth } from '../context/auth'
-    import Loader from './Loader';
+    // import Loader from './Loader';
     import { Navigate } from 'react-router-dom';
     import axios from 'axios';
     import { extractError } from '../utils/extractError';
@@ -9,7 +9,7 @@
     import { server } from '../constants/configServer';
 
     const ProtectedRoute = ({children}:{children:ReactNode}) => {
-        const [isLoading, setIsLoading] = useState(true);
+        // const [isLoading, setIsLoading] = useState(true);
         const { user, setUser }= UseAuth();
 
         useEffect(()=>{(async()=>{
@@ -23,14 +23,14 @@
                     setUser(null);
                     toast.error(extractError(err));
                 }finally{
-                    setIsLoading(false);
+                    // setIsLoading(false);
                 }
             })();
         },[setUser]);
 
 
-        if(isLoading)  
-            return <Loader/>
+        // if(isLoading)  
+        //     return <Loader/>
         return user ? children : <Navigate to="/login"/>
     }
 

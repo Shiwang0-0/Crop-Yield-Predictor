@@ -152,7 +152,14 @@ const publishSupportRequest=async (req:authRequest, res:Response, next:NextFunct
             const user= req.user;
             if (!user)
                 return next(new customError("User not found",401));
-            console.log("publish: ",req.body);
+
+            const existingCount = await SupportReq.countDocuments({ username: user.username });
+
+            if (existingCount >= 3) {
+                return next(
+                    new customError("You can only create up to 3 support requests.", 400)
+                );
+            }
 
             const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield, supportType, supportDescription } = req.body;
             const newRequest= await SupportReq.create({

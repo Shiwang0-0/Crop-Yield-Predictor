@@ -84,17 +84,17 @@
 
 ::-webkit-scrollbar {
   width: 10px;
-  background-color:rgb(19, 58, 35); /* Match your green background */
+  background-color:rgb(19, 58, 35);
 }
 
-/* Scrollbar thumb */
+
 ::-webkit-scrollbar-thumb {
   background-color: black;
-  border-radius: 50px; /* Makes it circular vertically */
-  border: 2px solid rgb(16, 50, 30); /* Creates spacing from track */
+  border-radius: 50px;
+  border: 2px solid rgb(16, 50, 30);
 }
 
-/* Firefox support */
+
 html {
   scrollbar-width: thin;
   scrollbar-color: black rgb(26, 48, 35);
