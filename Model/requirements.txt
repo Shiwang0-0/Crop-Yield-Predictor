@@ -1,4 +1,4 @@
-setuptools>=65.0.0
+setuptools>=70.0.0
 wheel
 gunicorn==21.2.0
 catboost==1.2.8
