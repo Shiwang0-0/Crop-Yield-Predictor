@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { SupportReq } from "../schema/user.js";
-import { authRequest } from "../interfaces/authRequest.js";
 import { customError } from "../utils/errors.js";
 
 const allSupportReq = async (req: Request, res: Response, next: NextFunction) => {
@@ -31,7 +30,7 @@ const allSupportReq = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-const userSupportReq = async(req: authRequest, res: Response, next:NextFunction)=>{
+const userSupportReq = async(req: Request, res: Response, next:NextFunction)=>{
   try{
       const user= req.user;
       if(!user)

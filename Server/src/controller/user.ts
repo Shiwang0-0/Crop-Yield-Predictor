@@ -5,7 +5,6 @@ import { SupportReq, User, UserCrop } from "../schema/user.js";
 import { customError } from "../utils/errors.js";
 import { compare } from "bcrypt"
 import { cookieOption, sendtoken } from "../utils/token.js";
-import { authRequest } from "../interfaces/authRequest.js";
 
 const hosted_model_url = process.env.SERVER_URL
 
@@ -46,7 +45,7 @@ const login=(async(req:Request, res:Response, next:NextFunction)=>{
     }
 })
 
-const getProfile=(async(req:authRequest, res:Response, next:NextFunction)=>{
+const getProfile=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const userId = req.user?._id;
         const user = await User.findById(userId);
@@ -64,10 +63,10 @@ const getProfile=(async(req:authRequest, res:Response, next:NextFunction)=>{
     }
 })
 
-const predict=(async(req:authRequest, res:Response, next:NextFunction)=>{
+const predict=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const username = req.user?.username;
-        const { crop, season, state}=req.body;
+        const { crop, season, state } = req.body;
 
         const modelResponse= await fetch(`${hosted_model_url}/predict`,{
              method: "POST",
@@ -121,7 +120,7 @@ const predict=(async(req:authRequest, res:Response, next:NextFunction)=>{
     }
 });
 
-const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=>{
+const publishPrediction=(async(req:Request,res:Response, next:NextFunction)=>{
     try{
         const user= req.user;
         if (!user)
@@ -149,7 +148,7 @@ const publishPrediction=(async(req:authRequest,res:Response, next:NextFunction)=
     }
 });
 
-const publishSupportRequest=async (req:authRequest, res:Response, next:NextFunction)=>{
+const publishSupportRequest=async (req:Request, res:Response, next:NextFunction)=>{
         try{
             const user= req.user;
             if (!user)
@@ -185,7 +184,7 @@ const publishSupportRequest=async (req:authRequest, res:Response, next:NextFunct
         }
 }
 
-const homeStats=(async(req:authRequest, res:Response, next:NextFunction)=>{
+const homeStats=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const user= req.user;
         if (!user)

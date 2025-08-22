@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 import { User } from "../schema/user.js"
-import { authRequest } from "../interfaces/authRequest.js"
 import { customError } from "../utils/errors.js"
 
-const isAuthenticated=async(req:authRequest, res:Response, next:NextFunction)=>{
+const isAuthenticated=async(req:Request, res:Response, next:NextFunction)=>{
     try{
         
         const token = req.cookies["val-token"];

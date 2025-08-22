@@ -1,9 +1,15 @@
 import { Request } from "express";
 
-export interface authRequest extends Request {
-    user?:{
-        _id:string,
-        email:string
-        username:string,
-    }
+interface PredictBody {
+    crop:string,
+    crop_year:string,
+    season:string,
+    state:string,
+    area:string,
+    rainfall:string,
+    fertilizer:string,
+    pesticide:string,
+    predictedYield:string,
+    supportType:string, 
+    supportDescription:string
 }

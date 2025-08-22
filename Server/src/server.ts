@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import cors from 'cors';
 import dotenv from "dotenv"
 import { corsOptions } from './utils/corsConfig.js';
@@ -47,11 +47,11 @@ if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static(clientDistPath));
 
-    app.all('/{*splat}', (req, res) => {
+    app.all('/{*splat}', (req:Request, res:Response) => {
         res.sendFile(path.join(clientDistPath, "index.html"));
     });
 } else {
-    app.get("/", (req, res) => {
+    app.get("/", (req:Request, res:Response) => {
         res.send("Success");
     });
 }
