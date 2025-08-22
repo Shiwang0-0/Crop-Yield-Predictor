@@ -1,11 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from "express";
-import { SupportReq, User, UserCrop } from "../schema/user";
-import { customError } from "../utils/errors";
+import { SupportReq, User, UserCrop } from "../schema/user.js";
+import { customError } from "../utils/errors.js";
 import { compare } from "bcrypt"
-import { cookieOption, sendtoken } from "../utils/token";
-import { authRequest } from "../interfaces/authRequest";
+import { cookieOption, sendtoken } from "../utils/token.js";
+import { authRequest } from "../interfaces/authRequest.js";
+
+const hosted_model_url = process.env.SERVER_URL
 
 const register = (async(req: Request, res: Response, next: NextFunction)=>{
 
@@ -67,7 +69,7 @@ const predict=(async(req:authRequest, res:Response, next:NextFunction)=>{
         const username = req.user?.username;
         const { crop, season, state}=req.body;
 
-        const modelResponse= await fetch("http://localhost:5000/predict",{
+        const modelResponse= await fetch(`${hosted_model_url}/predict`,{
              method: "POST",
             headers: {
                 "Content-Type": "application/json"

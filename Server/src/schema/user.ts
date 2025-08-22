@@ -1,8 +1,8 @@
 import mongoose, { Schema, HydratedDocument, model, Types } from "mongoose";
-import {isError} from "../utils/errors";
+import {isError} from "../utils/errors.js";
 import bcrypt from 'bcrypt';
-import { IUser, IUserCrop, ISupportRequest } from "../interfaces/user";
-import { customError } from "../utils/errors";
+import { IUser, IUserCrop, ISupportRequest } from "../interfaces/user.js";
+import { customError } from "../utils/errors.js";
 
 
 const userSchema = new Schema<IUser>({

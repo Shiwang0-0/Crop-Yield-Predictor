@@ -1,7 +1,7 @@
 import express from 'express'
-import {register, login, getProfile, predict, publishPrediction, getRandomData, publishSupportRequest, homeStats, logout} from '../controller/user'
-import { isAuthenticated } from '../middleware/auth';
-import { userSupportReq } from '../controller/support';
+import {register, login, getProfile, predict, publishPrediction, getRandomData, publishSupportRequest, homeStats, logout} from '../controller/user.js'
+import { isAuthenticated } from '../middleware/auth.js';
+import { userSupportReq } from '../controller/support.js';
 
 const router= express.Router();
 

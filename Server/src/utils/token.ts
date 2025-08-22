@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { IUserDocument } from "../interfaces/user";
+import { IUserDocument } from "../interfaces/user.js";
 import { Response } from "express";
 import { CookieOptions } from "express";
 

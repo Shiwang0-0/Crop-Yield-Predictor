@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { SupportReq } from "../schema/user";
-import { authRequest } from "../interfaces/authRequest";
-import { customError } from "../utils/errors";
+import { SupportReq } from "../schema/user.js";
+import { authRequest } from "../interfaces/authRequest.js";
+import { customError } from "../utils/errors.js";
 
 const allSupportReq = async (req: Request, res: Response, next: NextFunction) => {
   try {

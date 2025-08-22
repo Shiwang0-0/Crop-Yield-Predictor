@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
-import { User } from "../schema/user"
-import { authRequest } from "../interfaces/authRequest"
-import { customError } from "../utils/errors"
+import { User } from "../schema/user.js"
+import { authRequest } from "../interfaces/authRequest.js"
+import { customError } from "../utils/errors.js"
 
 const isAuthenticated=async(req:authRequest, res:Response, next:NextFunction)=>{
     try{

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { UserCrop } from "../schema/user";
-import { FilterType } from "../interfaces/leaderboard";
+import { UserCrop } from "../schema/user.js";
+import { FilterType } from "../interfaces/leaderboard.js";
 
 const getLeaderboardEntries=async (req:Request, res:Response, next:NextFunction)=>{
     try{
