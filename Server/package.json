@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && cd ../Client && npm install && npm run build",
+    "build": "tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {
