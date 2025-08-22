@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static(clientDistPath));
 
-    app.get('*', (req: Request, res: Response) => {
+    app.all('/{*any}', (req:Request, res:Response) => {
         const indexPath = path.join(clientDistPath, 'index.html');
         if (fs.existsSync(indexPath)) {
             res.sendFile(indexPath);
