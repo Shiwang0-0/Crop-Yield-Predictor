@@ -62,7 +62,6 @@ const Login = () => {
             return;
         }
         try{
-            console.log(isLogin ? "Logging in..." : "Registering...");
             if(isLogin){
                 await axios.post<User>(`${server}/api/user/login`,{
                         email:formData.email,

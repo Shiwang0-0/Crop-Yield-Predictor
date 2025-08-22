@@ -5,8 +5,13 @@ import { SupportReq, User, UserCrop } from "../schema/user.js";
 import { customError } from "../utils/errors.js";
 import { compare } from "bcrypt"
 import { cookieOption, sendtoken } from "../utils/token.js";
+import dotenv from "dotenv";
+
+
+dotenv.config({ path: "./.env" });
 
 const hosted_model_url = process.env.SERVER_URL
+const csv_url = process.env.CSV_URL
 
 const register = (async(req: Request, res: Response, next: NextFunction)=>{
 
@@ -67,7 +72,6 @@ const predict=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const username = req.user?.username;
         const { crop, season, state } = req.body;
-
         const modelResponse= await fetch(`${hosted_model_url}/predict`,{
              method: "POST",
             headers: {
@@ -110,12 +114,10 @@ const predict=(async(req:Request, res:Response, next:NextFunction)=>{
         ]);
 
         const globalAvg=globalAvgCal[0]?.globalAvg || null;
-        console.log(userAvgCal,globalAvgCal);
             
         res.json({outputYield, userAvg, globalAvg}); 
     }
     catch(err){
-        console.log("error in response by the model")
         return next(err);
     }
 });
@@ -125,7 +127,6 @@ const publishPrediction=(async(req:Request,res:Response, next:NextFunction)=>{
         const user= req.user;
         if (!user)
             return next(new customError("User not found",401));
-        console.log("publish: ",req.body);
         const { crop, crop_year, season, state, area, rainfall, fertilizer, pesticide, predictedYield } = req.body;
         const newRecord = await UserCrop.create({
             username: user.username,
@@ -213,10 +214,16 @@ const logout=(async(req:Request, res:Response, next:NextFunction)=>{
 
 const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
     try{
-        console.log("mydir: ",__dirname)
-        const filePath = path.join(__dirname, '../../../Model/crop_yield.csv');
+        if (!csv_url) {
+            return next(new Error("CSV URL not set in env"));
+        }
+        const response = await fetch(csv_url);
+        if (!response.ok) 
+            throw new customError("Failed to fetch CSV from Cloudinary",201);
 
-        const lines = fs.readFileSync(filePath, 'utf8').trim().split('\n');
+        const text = await response.text();
+
+        const lines = text.trim().split('\n');
         const headers = lines[0].split(',');
         const values = lines[Math.floor(Math.random() * (lines.length - 1)) + 1].split(',');
 
@@ -224,7 +231,6 @@ const getRandomData=(async(req:Request, res:Response, next:NextFunction)=>{
         headers.forEach((key, i) => {
             row[key] = values[i]?.trim() || '';
         });
-        console.log("random data: ",row);
         res.json(row);
     }catch(err){
         return next(err);

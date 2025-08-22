@@ -24,7 +24,7 @@ const isAuthenticated=async(req:Request, res:Response, next:NextFunction)=>{
         next();
     }   
     catch(err){
-        console.log("authenticated error: ",err);
+        return next(new customError("Invalid Credentials",401));
     }
 }
 

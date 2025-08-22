@@ -125,12 +125,10 @@ const Predict = () => {
                 globalAvg: res.data.globalAvg ?? null,
             });
             if (res.data.userAvg  && res.data.outputYield < 5 * res.data.userAvg){
-                console.log("hii")
                 setShowSupportModal(true);
             }else{
                 setShowResultModal(true);
             }
-            console.log("predicted value", res.data.outputYield);
 
         } catch{
             toast.error("Something went wrong while submitting the form.");

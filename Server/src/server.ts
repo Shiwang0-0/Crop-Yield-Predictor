@@ -35,13 +35,11 @@ app.use('/api/user', userRoute);
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-console.log(__dirname)
 
 if (process.env.NODE_ENV === 'production') {
     const projectRoot = path.resolve(__dirname, '..', '..');
 
     const clientDistPath = path.join(projectRoot, "Client", "dist");
-    console.log('Frontend folder contents:', fs.readdirSync(clientDistPath));
 
     app.use(express.static(clientDistPath));
 

@@ -46,7 +46,6 @@ const userSupportReq = async(req: Request, res: Response, next:NextFunction)=>{
       const username = user.username;
       
       const supportReq= await SupportReq.find({username}).sort({createdAt:-1});
-      console.log("user support req: ",supportReq);
       res.status(200).json(supportReq);
 
   }

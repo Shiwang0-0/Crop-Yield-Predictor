@@ -40,7 +40,6 @@ const Leaderboard = () => {
               season: selectedSeason || undefined,
             },
           });
-          console.log("leaderboard: ",res.data);
           setLeaderboard(res.data.entries);
           setTotalPages(res.data.totalPages);
         } catch (err) {
