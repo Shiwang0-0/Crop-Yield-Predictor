@@ -38,20 +38,22 @@ app.use('/user', userRoute);
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
+console.log(__dirname)
 
-const _dirname1 = path.resolve(__dirname, '..', '..')
+if (process.env.NODE_ENV === 'production') {
+    const projectRoot = path.resolve(__dirname, '..', '..');
 
-if(process.env.NODE_ENV=='production'){
-    app.use(express.static(path.join(_dirname1, "Client", "dist")));
+    const clientDistPath = path.join(projectRoot, "Client", "dist");
 
-    app.all('/{*any}',(req,res)=>{
-        res.sendFile(path.resolve(_dirname1,"Client","dist","index.html"));
+    app.use(express.static(clientDistPath));
+
+    app.all('/{*splat}', (req, res) => {
+        res.sendFile(path.join(clientDistPath, "index.html"));
     });
-}
-else{
-    app.get("/",(req,res)=>{
+} else {
+    app.get("/", (req, res) => {
         res.send("Success");
-    })
+    });
 }
 
 // ----------- Deployment  ------------
