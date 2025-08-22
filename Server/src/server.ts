@@ -44,10 +44,11 @@ if (process.env.NODE_ENV === 'production') {
     const projectRoot = path.resolve(__dirname, '..', '..');
 
     const clientDistPath = path.join(projectRoot, "Client", "dist");
+    console.log("Serving frontend from:", clientDistPath);
 
     app.use(express.static(clientDistPath));
 
-    app.all('/{*splat}', (req:Request, res:Response) => {
+    app.get('*', (req:Request, res:Response) => {
         res.sendFile(path.join(clientDistPath, "index.html"));
     });
 } else {

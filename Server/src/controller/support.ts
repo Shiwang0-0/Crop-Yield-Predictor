@@ -4,9 +4,16 @@ import { customError } from "../utils/errors.js";
 
 const allSupportReq = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { page = 1, limit = 10, crop, state, season } = req.query;
 
-    const query: any = {};
+    const { page = "1", limit = "10", crop, state, season } = req.query as {
+      page?: string;
+      limit?: string;
+      crop?: string;
+      state?: string;
+      season?: string;
+    };
+
+    const query: Record<string, unknown> = {};
 
     if (crop) query.crop = crop;
     if (state) query.state = state;
