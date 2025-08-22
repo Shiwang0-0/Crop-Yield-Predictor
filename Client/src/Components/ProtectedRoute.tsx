@@ -14,7 +14,7 @@
 
         useEffect(()=>{(async()=>{
                 try{
-                    const response=await axios.get<ProfileResponseInterface>(`${server}/user/getProfile`,{
+                    const response=await axios.get<ProfileResponseInterface>(`${server}/api/user/getProfile`,{
                         withCredentials:true
                     });
                     const payload = response.data;

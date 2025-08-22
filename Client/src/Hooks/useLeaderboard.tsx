@@ -11,7 +11,7 @@ export const useLeaderboard = () => {
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<LeaderboardResponse>(`${server}/leaderboard`,{
+        const res = await axios.get<LeaderboardResponse>(`${server}/api/leaderboard`,{
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         });

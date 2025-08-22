@@ -108,7 +108,7 @@ const Predict = () => {
         setFormValues(formValues)
         try {
             const res = await axios.post<PredictionResponse>(
-                `${server}/user/predict`,
+                `${server}/api/user/predict`,
                 formValues,
                 {
                     withCredentials: true,
@@ -155,7 +155,7 @@ const Predict = () => {
         }
         try{
             const res= await axios.post<{message:string}>(
-               `${server}/user/publish`,
+               `${server}/api/user/publish`,
                 {...formValues, predictedYield},
                 {
                     withCredentials: true,
@@ -187,7 +187,7 @@ const Predict = () => {
             }
         }
         try {
-            await axios.post(`${server}/user/publish-support-request`, {
+            await axios.post(`${server}/api/user/publish-support-request`, {
             ...formValues,
             predictedYield,
             supportType,

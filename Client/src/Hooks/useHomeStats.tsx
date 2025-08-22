@@ -14,7 +14,7 @@ export const useHomeStats = (userEmail?: string) => {
     const fetchHomeStats = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<HomeStats>(`${server}/user/homeStats`, {
+        const res = await axios.get<HomeStats>(`${server}/api/user/homeStats`, {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         });

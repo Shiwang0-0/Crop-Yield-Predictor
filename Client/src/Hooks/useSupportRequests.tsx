@@ -12,7 +12,7 @@ export const useSupportRequests = () => {
         const userSupportRequest = async () => {
             try {
                 setLoading(true);
-                const res = await axios.get<ISupportRequest[]>(`${server}/user/user-support-request`,{
+                const res = await axios.get<ISupportRequest[]>(`${server}/api/user/user-support-request`,{
                 withCredentials: true,
                 headers: { "Content-Type": "application/json" },
                 });

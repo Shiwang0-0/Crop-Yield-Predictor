@@ -26,13 +26,9 @@ const PORT=process.env.PORT;
 
 connectDB();
 
-app.get('/',(req:Request,res:Response)=>{
-    res.send("connected to ts backend");
-});
-
-app.get("/leaderboard",getLeaderboardEntries);
-app.get("/support", allSupportReq);
-app.use('/user', userRoute);
+app.get("/api/leaderboard",getLeaderboardEntries);
+app.get("/api/support", allSupportReq);
+app.use('/api/user', userRoute);
 
 // ----------- Deployment  ------------
 
@@ -49,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static(clientDistPath));
 
-    app.all('/{*any}', (req:Request, res:Response) => {
+    app.all('/*splat', (req:Request, res:Response) => {
         const indexPath = path.join(clientDistPath, 'index.html');
         if (fs.existsSync(indexPath)) {
             res.sendFile(indexPath);
@@ -57,6 +53,10 @@ if (process.env.NODE_ENV === 'production') {
             res.status(404).send('index.html not found');
         }
     });
+}else{
+    app.get("/",(req,res)=>{
+        res.send("Success");
+    })
 }
 
 // ----------- Deployment  ------------

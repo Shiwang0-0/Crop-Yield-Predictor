@@ -31,7 +31,7 @@ const Leaderboard = () => {
 
     const fetchLeaderBoard=async()=>{
         try {
-          const res = await axios.get<LeaderboardResponse>(`${server}/leaderboard`,{
+          const res = await axios.get<LeaderboardResponse>(`${server}/api/leaderboard`,{
             params: {
               page,
               limit,

@@ -11,7 +11,7 @@ export const getRandomData = async (): Promise<{
   fertilizer: string;
   pesticide: string;
 }> => {
-  const { data } = await axios.get(`${server}/user/randomData`, { withCredentials: true });
+  const { data } = await axios.get(`${server}/api/user/randomData`, { withCredentials: true });
 
   return {
     crop: data.Crop,

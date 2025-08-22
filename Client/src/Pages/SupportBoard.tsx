@@ -31,7 +31,7 @@ const SupportBoard = () => {
     const fetchSupport = async () => {
       try {
         const res = await axios.get<{ entries: ISupportRequest[]; totalPages: number }>(
-          `${server}/support`,
+          `${server}/api/support`,
           {
             params: {
               page,

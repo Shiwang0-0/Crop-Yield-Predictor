@@ -64,7 +64,7 @@ const Login = () => {
         try{
             console.log(isLogin ? "Logging in..." : "Registering...");
             if(isLogin){
-                await axios.post<User>(`${server}/user/login`,{
+                await axios.post<User>(`${server}/api/user/login`,{
                         email:formData.email,
                         username:formData.username,
                         password:formData.password
@@ -77,7 +77,7 @@ const Login = () => {
                     }
                 )
             }else{
-                await axios.post<User>(`${server}/user/register`,{
+                await axios.post<User>(`${server}/api/user/register`,{
                         email:formData.email,
                         username:formData.username,
                         password:formData.password
@@ -92,7 +92,7 @@ const Login = () => {
             }
 
             try{
-                const {data}= await axios.get<ProfileResponseInterface>(`${server}/user/myprofile`,{
+                const {data}= await axios.get<ProfileResponseInterface>(`${server}/api/user/myprofile`,{
                     withCredentials:true
                 })
                 if(data)
