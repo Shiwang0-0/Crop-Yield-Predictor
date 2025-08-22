@@ -10,6 +10,7 @@ import { getLeaderboardEntries } from './controller/leaderboard.js';
 import { allSupportReq } from './controller/support.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const app=express();
 app.use(cors(corsOptions));
@@ -25,7 +26,7 @@ const PORT=process.env.PORT;
 
 connectDB();
 
-app.get('/',(req,res)=>{
+app.get('/',(req:Request,res:Response)=>{
     res.send("connected to ts backend");
 });
 
@@ -44,23 +45,23 @@ if (process.env.NODE_ENV === 'production') {
     const projectRoot = path.resolve(__dirname, '..', '..');
 
     const clientDistPath = path.join(projectRoot, "Client", "dist");
-    console.log("Serving frontend from:", clientDistPath);
+    console.log('Frontend folder contents:', fs.readdirSync(clientDistPath));
 
     app.use(express.static(clientDistPath));
 
-    app.get('*', (req:Request, res:Response) => {
-        res.sendFile(path.join(clientDistPath, "index.html"));
-    });
-} else {
-    app.get("/", (req:Request, res:Response) => {
-        res.send("Success");
+    app.get('*', (req: Request, res: Response) => {
+        const indexPath = path.join(clientDistPath, 'index.html');
+        if (fs.existsSync(indexPath)) {
+            res.sendFile(indexPath);
+        } else {
+            res.status(404).send('index.html not found');
+        }
     });
 }
 
 // ----------- Deployment  ------------
 
 app.use(errorMiddleware)
-console.log(process.env.NODE_ENV)
 
 app.listen(PORT,()=>{
     console.log("server running on port",PORT);
