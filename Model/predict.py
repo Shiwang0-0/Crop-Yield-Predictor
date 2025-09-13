@@ -10,6 +10,10 @@ model.load_model("model.cbm")
 
 epsilon= 1e-5 
 
+@app.get("/ping")
+def ping(msg: str = "ok"):
+    return {"status": msg}
+
 @app.route('/predict',methods=["POST"])
 def predict():
     data=request.json

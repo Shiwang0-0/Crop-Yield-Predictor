@@ -7,10 +7,11 @@ export interface Env {
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
     try {
-      const res = await fetch(env.SERVER_URL);
-      console.log(`[KEEP-ALIVE] Status: ${res.status}`);
-    } catch (err: any) {
-      console.error(`[KEEP-ALIVE] Failed: ${err.message}`);
-    }
+        const pingurl = `${env.SERVER_URL}/ping?msg=keep_alive`;
+        const response = await fetch(pingurl);
+        console.log(`Pinged ${env.SERVER_URL}: ${response.status}`);
+      } catch (error) {
+        console.error("Ping failed:", error);
+      }
   },
 };
